@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Tasks</title>
+</head>
+<body>
+    <form action="/" method="post">
+            <label form="new_task_name">New Task</label>
+        <label>
+            <input type="text" name="new_task_name">
+        </label>
+        <input type="submit">
+    </form>
+
+    <table style="margin-top: 10px">
+        <tr>
+            <td><form action="/" method="POST">
+                <input width="100" type="submit" class="btn btn-dark" value="Show incompleted">
+                <label>
+                    <input type="hidden" name="status" value="incompleted">
+                </label>
+            </form></td>
+
+            <td><form action="/" method="POST">
+                <input width="100" type="submit" class="btn btn-dark" value="Show completed">
+                <label>
+                    <input type="hidden" name="status" value="completed">
+                </label>
+            </form></td>
+
+            <td><form action="/" method="POST">
+                <input width="100" type="submit" class="btn btn-dark" value="Show all">
+                <label>
+                    <input type="hidden" name="status" value="all">
+                </label>
+            </form></td>
+        </tr>
+    </table>
+    <h1 style="margin-top: 50px">List of tasks</h1>
+    <table style="word-break: break-all" border="1">
+        <tr>
+            <td style="text-align: center" width="600">Задание</td>
+            <td style="text-align: center" width="100">Статус</td>
+        </tr>
+        {% for index, value in enumerate(todo_list.tasks): %}
+        <tr>
+            {% if todo_list.status == 'all' or todo_list.status == value.status: %}
+            <td style="padding-left: 10px" width="600"> {{ value.name }} </td><td align="center">
+                <form action="/" method="POST">
+                    <input type="hidden" name="index" value="{{ index }}">
+                    {% if value.status == 'incompleted': %}
+                        <input name="button_submit" width="100" type="submit" class="btn btn-dark" value="Complete!">
+                    {% endif %}
+                    {% if value.status == 'completed': %}
+                        <input name="button_submit" width="100" type="submit" disabled class="btn btn-dark" value="Completed">
+                    {% endif %}
+                </form>
+            </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
